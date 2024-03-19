@@ -10,15 +10,24 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float rotspeed = 5f;
     Vector3 horizontal = new Vector3(0,0,0);
     Vector3 vertical = new Vector3(0,0,0);
+    [SerializeField] ClearCounter selectedCounter;
 
+    [SerializeField] GameInput gameInput;
     [SerializeField] LayerMask counterLayer;
     public bool isWalking = false;
     void Start()
     {
-        
+        gameInput.OnInteract += GameInput_OnInteractAction;
     }
 
     // Update is called once per frame
+    private void GameInput_OnInteractAction(object sender, System.EventArgs e)
+    {
+        if(selectedCounter !=null)
+        {
+            selectedCounter.Interact();
+        }
+    }
     void Update()
     {
         PlayerWalking();
@@ -50,8 +59,16 @@ public class PlayerMovement : MonoBehaviour
         if(Physics.Raycast(transform.position, transform.forward, out hit, interactDistance, counterLayer))
         {
             ClearCounter check = hit.transform.GetComponent<ClearCounter>();
-            if(check == null)return;
-            check.Interact();
+            if(check == null)
+            {
+                selectedCounter = null;
+                return;
+            }
+            if(check != selectedCounter)
+            {
+                selectedCounter = check;
+            }
         }
-    }
+        else selectedCounter = null; //if Raycast doesn't hit anything then selected couter should be made null to deselect past counter
+     }
 }

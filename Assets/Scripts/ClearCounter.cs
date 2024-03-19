@@ -5,8 +5,11 @@ using UnityEngine;
 public class ClearCounter : MonoBehaviour
 {
     // Start is called before the first frame update
+    [SerializeField] SO_KitchenObjects item;
+    [SerializeField] Transform spawnPosition;
     public void Interact()
     {
-        Debug.Log("Interact");
+        Transform spawnItem = Instantiate(item.prefab, spawnPosition);
+        Debug.Log(spawnItem.GetComponent<KithenObjects>().GetScriptableObject());
     }
 }
