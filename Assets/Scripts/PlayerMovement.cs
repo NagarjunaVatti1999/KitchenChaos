@@ -10,6 +10,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float rotspeed = 5f;
     Vector3 horizontal = new Vector3(0,0,0);
     Vector3 vertical = new Vector3(0,0,0);
+
+    [SerializeField] LayerMask counterLayer;
+    public bool isWalking = false;
     void Start()
     {
         
@@ -17,6 +20,11 @@ public class PlayerMovement : MonoBehaviour
 
     // Update is called once per frame
     void Update()
+    {
+        PlayerWalking();
+        HandleInteactions();
+    }
+    void PlayerWalking()
     {
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
@@ -30,6 +38,20 @@ public class PlayerMovement : MonoBehaviour
         Vector3 movDir = new Vector3(horizontal.x, 0, vertical.z);
         transform.position += movDir.normalized*speed*Time.deltaTime;
 
+        isWalking = movDir != new Vector3();
+
         transform.forward = Vector3.Slerp(transform.forward,movDir, Time.deltaTime*rotspeed);
+    }
+    
+    void HandleInteactions()
+    {
+        RaycastHit hit;
+        float interactDistance = 2f;
+        if(Physics.Raycast(transform.position, transform.forward, out hit, interactDistance, counterLayer))
+        {
+            ClearCounter check = hit.transform.GetComponent<ClearCounter>();
+            if(check == null)return;
+            check.Interact();
+        }
     }
 }
