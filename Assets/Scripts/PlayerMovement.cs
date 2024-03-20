@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour, IKitchenObjectParent
 {
     // Start is called before the first frame update
     [SerializeField] float speed = 5f;
@@ -11,9 +11,10 @@ public class PlayerMovement : MonoBehaviour
     Vector3 horizontal = new Vector3(0,0,0);
     Vector3 vertical = new Vector3(0,0,0);
     [SerializeField] ClearCounter selectedCounter;
-
     [SerializeField] GameInput gameInput;
+    [SerializeField] Transform KitchenObjectHoldPoint;
     [SerializeField] LayerMask counterLayer;
+    private KithenObjects spawnedObject;
     public bool isWalking = false;
     void Start()
     {
@@ -25,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if(selectedCounter !=null)
         {
-            selectedCounter.Interact();
+            selectedCounter.Interact(this);
         }
     }
     void Update()
@@ -71,4 +72,26 @@ public class PlayerMovement : MonoBehaviour
         }
         else selectedCounter = null; //if Raycast doesn't hit anything then selected couter should be made null to deselect past counter
      }
+
+    public Transform GetCounterShiftingTransform() //will be called from KitchenObject which will send the new position
+    {
+        return KitchenObjectHoldPoint;
+;
+    }
+     public void SetKitchenObject(KithenObjects ko)
+    {
+        spawnedObject = ko;
+    }
+    public KithenObjects GetKithenObjects()
+    {
+        return spawnedObject;
+    }
+    public void ClearKitchenObject()
+    {
+        spawnedObject = null;
+    }
+    public bool HasKitchenObject()
+    {
+        return spawnedObject !=null;
+    }
 }
