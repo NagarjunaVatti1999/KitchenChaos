@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour, IKitchenObjectParent
     [SerializeField] float rotspeed = 5f;
     Vector3 horizontal = new Vector3(0,0,0);
     Vector3 vertical = new Vector3(0,0,0);
-    [SerializeField] ClearCounter selectedCounter;
+    [SerializeField] BaseCounter selectedCounter;
     [SerializeField] GameInput gameInput;
     [SerializeField] Transform KitchenObjectHoldPoint;
     [SerializeField] LayerMask counterLayer;
@@ -59,7 +59,7 @@ public class PlayerMovement : MonoBehaviour, IKitchenObjectParent
         float interactDistance = 2f;
         if(Physics.Raycast(transform.position, transform.forward, out hit, interactDistance, counterLayer))
         {
-            ClearCounter check = hit.transform.GetComponent<ClearCounter>();
+            BaseCounter check = hit.transform.GetComponent<BaseCounter>();
             if(check == null)
             {
                 selectedCounter = null;

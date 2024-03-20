@@ -2,12 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ClearCounter : BaseCounter
+public class CuttingCounter : BaseCounter
 {
     // Start is called before the first frame update
-    
-    [SerializeField] SO_KitchenObjects item;
-    public override void Interact(PlayerMovement player)
+     public override void Interact(PlayerMovement player)
     {
         if(!HasKitchenObject())
         {
@@ -24,5 +22,4 @@ public class ClearCounter : BaseCounter
             }
         }
     }
-    
 }
