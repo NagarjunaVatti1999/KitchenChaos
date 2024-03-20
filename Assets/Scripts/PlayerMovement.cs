@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour, IKitchenObjectParent
     void Start()
     {
         gameInput.OnInteract += GameInput_OnInteractAction;
+        gameInput.OnInteractAlternate += GameInput_OnInteractAlternateAction;
     }
 
     // Update is called once per frame
@@ -27,6 +28,13 @@ public class PlayerMovement : MonoBehaviour, IKitchenObjectParent
         if(selectedCounter !=null)
         {
             selectedCounter.Interact(this);
+        }
+    }
+    private void GameInput_OnInteractAlternateAction(object sender, System.EventArgs e)
+    {
+        if(selectedCounter !=null)
+        {
+            selectedCounter.InteractAlternate(this);
         }
     }
     void Update()

@@ -11,6 +11,10 @@ public class BaseCounter : MonoBehaviour, IKitchenObjectParent
     {
         Debug.LogError("Base Class function called");
     }
+    public virtual void InteractAlternate(PlayerMovement Player)
+    {
+        Debug.LogError("Base Class function called");
+    }
     public Transform GetCounterShiftingTransform() //will be called from KitchenObject which will send the new position
     {
         return spawnPosition;
