@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efc1e45c549abe64faef1d83e368f357, type: 3}
-  m_Name: MeatUncooked
+  m_Script: {fileID: 11500000, guid: e0cb26c53bbdd1c479265c092a252a9a, type: 3}
+  m_Name: MeatCooked-MeatBurnt
   m_EditorClassIdentifier: 
-  prefab: {fileID: 6814030437319310727, guid: 5dc830316a9bf604081bbfab7d16ec04, type: 3}
-  icon: {fileID: 21300000, guid: aa1bacc24dde76e47b2ec0dd4e82385b, type: 3}
-  itemname: MeatUncoocked
+  input: {fileID: 11400000, guid: 16061ba7fd2ef2642af36adfcfb8e6ac, type: 2}
+  output: {fileID: 11400000, guid: 103692d44e3478445b28ddbbd338b97c, type: 2}
+  bruningTimeMax: 5
