@@ -33,6 +33,18 @@ public class ClearCounter : BaseCounter
                         GetKithenObjects().DestroySelf();
                     }
                 }
+                else{
+                    //if player is carrying something else
+                    if(GetKithenObjects() is PlateKitchenObject)
+                    {
+                        PlateKitchenObject counterplate = GetKithenObjects() as PlateKitchenObject;
+                        if(counterplate.TryAddIngredient(player.GetKithenObjects().GetScriptableObject()))
+                        {
+                            player.GetKithenObjects().DestroySelf();
+                        }
+                    }
+
+                }
             }
         }
     }

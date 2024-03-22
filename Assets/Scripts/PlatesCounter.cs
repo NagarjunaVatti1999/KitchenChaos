@@ -15,10 +15,13 @@ public class PlatesCounter : BaseCounter
     }
     public override void Interact(PlayerMovement Player)
     {
+        if(!Player.HasKitchenObject())
+        {
             GetKithenObjects().SetKitchenObjectParent(Player);
            // Player.SetKitchenObject(plate.prefab);
 
             Transform newplate = Instantiate(plate.prefab, GetCounterShiftingTransform());
             newplate.GetComponent<KithenObjects>().SetKitchenObjectParent(this);
+        }
     }
 }

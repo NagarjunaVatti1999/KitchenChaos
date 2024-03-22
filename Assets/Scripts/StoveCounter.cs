@@ -53,7 +53,7 @@ public class StoveCounter : BaseCounter
                         GetKithenObjects().DestroySelf();
                     }
                 }
-            }
+            } 
         }
     }
 

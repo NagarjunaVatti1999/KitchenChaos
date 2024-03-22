@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,10 @@ using UnityEngine;
 public class PlateKitchenObject : KithenObjects
 {
     // Start is called before the first frame update
+    public event EventHandler<OnAddIngredientEventArgs> OnAddIngredient;
+    public class OnAddIngredientEventArgs: EventArgs{
+        public SO_KitchenObjects addedIngreient;
+    }
     [SerializeField] List<SO_KitchenObjects> validKithenObjectsSO;
 
     private List<SO_KitchenObjects> kithenObjectsList;
@@ -23,6 +28,13 @@ public class PlateKitchenObject : KithenObjects
             return false;
         }
         kithenObjectsList.Add(kithenObject);
+        OnAddIngredient?.Invoke(this, new OnAddIngredientEventArgs{
+            addedIngreient = kithenObject
+            });
         return true;
+    }
+    public List<SO_KitchenObjects> GetAddedIngredientList()
+    {
+        return kithenObjectsList;
     }
 }
