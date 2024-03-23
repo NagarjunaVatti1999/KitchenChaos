@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DeliveryManagerUI : MonoBehaviour
 {
@@ -11,7 +13,7 @@ public class DeliveryManagerUI : MonoBehaviour
     [SerializeField] private Transform recipeTemplate;
     [SerializeField] private DeliveryManager deliveryManager;
     private void Awake() {
-       
+       recipeTemplate.gameObject.SetActive(false);
     }
 
     private void Start() {
@@ -40,8 +42,11 @@ public class DeliveryManagerUI : MonoBehaviour
         foreach(SORecipe recipe in deliveryManager.GetWaitingRecipes())
         {
             Transform recipeTransform = Instantiate(recipeTemplate, container);
-            recipeTransform.Find("RecipeText").GetComponent<TextMeshProUGUI>().text = recipe.name;
-            //iconImage.sprite = ingredient.icon;
+            recipeTransform.gameObject.SetActive(true);
+            recipeTransform.GetComponent<RecipeIconUIVisual>().SetRecipeDetails(recipe);
+            
+            //go through each ingredient in recipe and spawn icon for it
+            
         }
     }
 }
