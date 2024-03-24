@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BaseCounter : MonoBehaviour, IKitchenObjectParent
 {
+    public static event EventHandler OnItemDropped;
     private KithenObjects spawnedObject;
     [SerializeField] Transform spawnPosition;
     // Start is called before the first frame update
@@ -26,6 +28,7 @@ inform new counter that it is now the kitchen objects new parent*/
     public void SetKitchenObject(KithenObjects ko)
     {
         spawnedObject = ko;
+        if(ko!=null)OnItemDropped?.Invoke(this, EventArgs.Empty);
     }
     public KithenObjects GetKithenObjects()
     {

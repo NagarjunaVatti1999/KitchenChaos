@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -6,6 +7,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour, IKitchenObjectParent
 {
     // Start is called before the first frame update
+    public static event EventHandler OnItemPicked;
     [SerializeField] float speed = 5f;
     [SerializeField] float rotspeed = 5f;
     Vector3 horizontal = new Vector3(0,0,0);
@@ -25,6 +27,7 @@ public class PlayerMovement : MonoBehaviour, IKitchenObjectParent
     // Update is called once per frame
     private void GameInput_OnInteractAction(object sender, System.EventArgs e)
     {
+        if(!KitchenGameManager.Instance.IsGamePlaying()) return;
         if(selectedCounter !=null)
         {
             selectedCounter.Interact(this);
@@ -32,6 +35,7 @@ public class PlayerMovement : MonoBehaviour, IKitchenObjectParent
     }
     private void GameInput_OnInteractAlternateAction(object sender, System.EventArgs e)
     {
+        if(!KitchenGameManager.Instance.IsGamePlaying()) return;    
         if(selectedCounter !=null)
         {
             selectedCounter.InteractAlternate(this);
@@ -84,11 +88,12 @@ public class PlayerMovement : MonoBehaviour, IKitchenObjectParent
     public Transform GetCounterShiftingTransform() //will be called from KitchenObject which will send the new position
     {
         return KitchenObjectHoldPoint;
-;
     }
      public void SetKitchenObject(KithenObjects ko)
     {
         spawnedObject = ko;
+
+        if(ko!=null)OnItemPicked?.Invoke(this, EventArgs.Empty);
     }
     public KithenObjects GetKithenObjects()
     {

@@ -9,6 +9,9 @@ public class DeliveryManager : MonoBehaviour
     public event EventHandler OnRecipeSpawned;
     public event EventHandler OnRecipeDelivered;
 
+    public event EventHandler OnRecipeSuccess;
+    public event EventHandler OnRecipeFailed;
+
 
     [SerializeField] private SORecipeList mylist;
     [SerializeField] int waitineRecipeMax = 4;
@@ -72,18 +75,19 @@ public class DeliveryManager : MonoBehaviour
             }
             if(itemMatched)
             {
-                Debug.Log("Correct Recipe Delivered");
-
+                //Debug.Log("Correct Recipe Delivered");
+                
                 OnRecipeDelivered?.Invoke(this, EventArgs.Empty); //Telling UI that a given recipe is delivered
+                OnRecipeSuccess?.Invoke(this, EventArgs.Empty);
 
                 waitingRecipeList.Remove(waitingRecipeList[0]);
             }
             else{
-                Debug.Log("Wrong Recipe");
+                OnRecipeFailed?.Invoke(this, EventArgs.Empty);
             } 
         }
         else{
-            Debug.Log("Wrong Recipe Delivered");
+            OnRecipeFailed?.Invoke(this, EventArgs.Empty);
         }
 
     }

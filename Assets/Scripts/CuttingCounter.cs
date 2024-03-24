@@ -1,11 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CuttingCounter : BaseCounter
 {
     // Start is called before the first frame update
     private const string CUT = "Cut";
+    public static event EventHandler OnyAnyCut;
     [SerializeField] SO_CuttingRecipe[] cutKitchenObject;
     [SerializeField] Animator cutanim;
 
@@ -50,6 +53,7 @@ public class CuttingCounter : BaseCounter
             //Play Cutting animation
             if(cutanim!=null)cutanim.SetTrigger(CUT);
 
+            OnyAnyCut?.Invoke(this, EventArgs.Empty); //play cutting sound from sound manager;
             SO_KitchenObjects outputobj = GetOutputForInput(GetKithenObjects().GetScriptableObject());
             GetKithenObjects().DestroySelf();
             
