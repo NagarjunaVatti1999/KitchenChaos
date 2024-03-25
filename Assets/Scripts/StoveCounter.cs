@@ -2,12 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class StoveCounter : BaseCounter
 {
     // Start is called before the first frame update
     [SerializeField] StoveCounterVisual stovevisual;
+    [SerializeField] Image warning;
     float progressAmount = 0;
     public enum State
     {
@@ -20,6 +22,13 @@ public class StoveCounter : BaseCounter
     [SerializeField] ProgressBar barUpdate;
     [SerializeField] SO_CookingRecipe[] cookingObjects;
     [SerializeField] SO_BurningRecipe[] burningObjects;
+
+    private void Start() {
+        warning.gameObject.SetActive(false);
+    }
+    private void Update() {
+        ShowWarning();
+    }
      public override void Interact(PlayerMovement player)
     {
         if(!HasKitchenObject())
@@ -31,6 +40,9 @@ public class StoveCounter : BaseCounter
                     player.GetKithenObjects().SetKitchenObjectParent(this);
                     SO_CookingRecipe item = ObjectToCook(this.GetKithenObjects().GetScriptableObject());
                     state = State.Idle;
+
+                    barUpdate.gameObject.SetActive(true);
+                    
                     StartCoroutine(CookingProcess(item.fryingTimeMax, item));
                     
                 }
@@ -41,6 +53,7 @@ public class StoveCounter : BaseCounter
             if(!player.HasKitchenObject())
             {
                 GetKithenObjects().SetKitchenObjectParent(player);
+                barUpdate.gameObject.SetActive(false);
             }
             else if(player.HasKitchenObject())
             {
@@ -52,6 +65,7 @@ public class StoveCounter : BaseCounter
                     {
                         GetKithenObjects().DestroySelf();
                     }
+                    barUpdate.gameObject.SetActive(false);
                 }
             } 
         }
@@ -75,6 +89,7 @@ public class StoveCounter : BaseCounter
             //if the patty is not removed start burning coroutine
             SO_BurningRecipe nextitem = ObjectToBurn(this.GetKithenObjects().GetScriptableObject());
             StartCoroutine(BurningProcess(nextitem.bruningTimeMax, nextitem));
+            
             progressAmount = 0;
         }
     }
@@ -136,5 +151,13 @@ public class StoveCounter : BaseCounter
             }
         }
         return null;
+    }
+    void ShowWarning()
+    {
+        if(state == State.Fried)
+        {
+            warning.gameObject.SetActive(true);
+        }
+        if(!HasKitchenObject())warning.gameObject.SetActive(false);
     }
 }
