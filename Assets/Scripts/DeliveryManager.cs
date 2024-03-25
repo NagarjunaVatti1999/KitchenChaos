@@ -27,7 +27,7 @@ public class DeliveryManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(entered == false) //enter again only once the previous co-routine is completed
+        if(KitchenGameManager.Instance.IsGamePlaying() && entered == false) //enter again only once the previous co-routine is completed
         {
             StartCoroutine(RecipeListUpdater());
         }

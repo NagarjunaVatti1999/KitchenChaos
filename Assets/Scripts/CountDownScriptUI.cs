@@ -12,7 +12,7 @@ public class CountDownScriptUI : MonoBehaviour
 
     private void Start() {
         KitchenGameManager.Instance.OnStateChanged +=KitcenManager_OnStateChanged;
-        //Hide();
+        Hide();
     }
 
     private void KitcenManager_OnStateChanged(object sender, EventArgs e)

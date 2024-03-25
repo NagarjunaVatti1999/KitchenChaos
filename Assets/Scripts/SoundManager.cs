@@ -8,6 +8,8 @@ public class SoundManager : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField] SOAudioClips clips;
     [SerializeField] DeliveryManager deliveryManager;
+
+    private bool playOnce = false;
     private void Start() {
         deliveryManager.OnRecipeSuccess += OnRecipeSuccess_PlaySound;
         deliveryManager.OnRecipeFailed += OnRecipeFailed_PlaySound;
@@ -15,8 +17,17 @@ public class SoundManager : MonoBehaviour
         TrashCounter.OnItemTrashed += TrashCounter_OnItemTrashed;
         PlayerMovement.OnItemPicked += PlayerMovement_OnItemPicked;
         BaseCounter.OnItemDropped += BaseCounter_OnItemDropped;
+        KitchenGameManager.Instance.OnStateChanged += kitchenGameManager_OnStateChanged;
     }
 
+    private void kitchenGameManager_OnStateChanged(object sender, EventArgs e)
+    {
+        if(playOnce == false)
+        {
+            PlaySound(clips.warning, Camera.main.transform.position, 1f);
+            playOnce = true;
+        }
+    }
     private void BaseCounter_OnItemDropped(object sender, EventArgs e)
     {
         BaseCounter basecounter = sender as BaseCounter;

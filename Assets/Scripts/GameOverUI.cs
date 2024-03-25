@@ -8,7 +8,7 @@ public class GameOverUI : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField] private TextMeshProUGUI GameOverText;
-        [SerializeField] private DeliveryManager deliveryManager;
+    [SerializeField] private DeliveryManager deliveryManager;
 
     private void Start() {
         KitchenGameManager.Instance.OnStateChanged +=KitcenManager_OnStateChanged;
