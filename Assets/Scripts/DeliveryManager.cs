@@ -16,6 +16,8 @@ public class DeliveryManager : MonoBehaviour
     [SerializeField] private SORecipeList mylist;
     [SerializeField] int waitineRecipeMax = 4;
     private List<SORecipe> waitingRecipeList;
+
+    private int recipesDelivered = 0;
     private bool entered = false;
     void Awake()
     {
@@ -79,7 +81,7 @@ public class DeliveryManager : MonoBehaviour
                 
                 OnRecipeDelivered?.Invoke(this, EventArgs.Empty); //Telling UI that a given recipe is delivered
                 OnRecipeSuccess?.Invoke(this, EventArgs.Empty);
-
+                recipesDelivered++;
                 waitingRecipeList.Remove(waitingRecipeList[0]);
             }
             else{
@@ -90,5 +92,10 @@ public class DeliveryManager : MonoBehaviour
             OnRecipeFailed?.Invoke(this, EventArgs.Empty);
         }
 
+    }
+
+    public int GetRecipesDelivered()
+    {
+        return recipesDelivered;
     }
 };
