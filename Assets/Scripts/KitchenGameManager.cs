@@ -42,7 +42,13 @@ public class KitchenGameManager : MonoBehaviour
         gametime = DataBridge.Instance.timervalue;
 
         int.TryParse(gametime, out int gettime);
-        gamePlayingTimerMax = gettime*60;
+        if(gettime>=1)
+        {
+            gamePlayingTimerMax = gettime*60;
+        }
+        else{
+            gamePlayingTimerMax = 300; //5 min game by default
+        }
     
     }
 
