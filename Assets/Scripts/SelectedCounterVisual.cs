@@ -5,14 +5,14 @@ using UnityEngine;
 public class SelectedCounterVisual : MonoBehaviour
 {
     // Start is called before the first frame update
-    void Start()
-    {
-        
+    [SerializeField] private GameObject counter;
+    private void OnTriggerEnter(Collider other) {
+        if(other.tag == "Player")
+        {
+            counter.SetActive(true);
+        }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+    private void OnTriggerExit(Collider other) {
+        counter.SetActive(false);
     }
 }
