@@ -14,33 +14,28 @@ public class LevelCreator : MonoBehaviour
     [SerializeField] float cellSizeWidth;
     [SerializeField] GameObject clearCounter;
     private Dictionary<GameObject, int> dict;
-    private KeyValuePair<GameObject, int>[] holder; 
-    private float currentGridWidth;
-    private float currentGridLength;
+
+    private List<Transform> mygrid;
     private int totalLengthCells;
     private int totalWidthCells;
     void Start()
     {
         dict = new Dictionary<GameObject, int>();
+        mygrid = new List<Transform>();
 
         foreach(var x in counters)
         {
             dict.Add(x.prefab, x.number);
         }
+
+        CreateGrid();
+        ReplaceGrid();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.K))
-        {
-            Debug.Log(dict.Count);
-        }
-
-        if(Input.GetKeyDown(KeyCode.L))
-        {
-            CreateGrid();
-        }
+        
     }
     void CreateGrid()
     {
@@ -58,28 +53,9 @@ public class LevelCreator : MonoBehaviour
             {
                 if(i==0 || i == totalLengthCells-1 ||j ==0 || j == totalWidthCells-1)
                 {
-                    if(CheckCorners(i,j))
-                    {
-                        Instantiate(clearCounter, startPosition, Quaternion.identity);
-                         startPosition = new Vector3(startPosition.x+cellSizeWidth, 0, startPosition.z);
-                        continue;
-                    }
-
-                    List<KeyValuePair<GameObject, int>> dict_list =  dict.ToList();
-
-                    KeyValuePair<GameObject, int> item = dict_list[UnityEngine.Random.Range(0, dict_list.Count)];
-                    GameObject counter = item.Key;
-                    //Debug.Log(counter);
-                    int counterNumbers = item.Value;
-                    
-                    if(counterNumbers>0)
-                    {
-                        Instantiate(counter, startPosition, Quaternion.identity);
-                        dict[counter]--;
-                        
-                    }else{
-                        Instantiate(clearCounter, startPosition, Quaternion.identity);
-                    }    
+                    GameObject gridcell = Instantiate(clearCounter, startPosition, Quaternion.identity);
+                    //KeyValuePair<Transform, Vector2> cell = new KeyValuePair<Transform, Vector2>(gridcell.transform, new Vector2(i,j));
+                    if(!CheckCorners(i,j))mygrid.Add(gridcell.transform);
                 }
                 startPosition = new Vector3(startPosition.x+cellSizeWidth, 0, startPosition.z);
             }
@@ -96,5 +72,26 @@ public class LevelCreator : MonoBehaviour
             return true;
         }
         return false;
+    }
+    void ReplaceGrid()
+    {
+        SortedSet<int> myset = new SortedSet<int>();
+        if(mygrid.Count < counters.Length)
+        {
+            Debug.LogError("Not Enough Counters");
+            return;
+        }
+        foreach(var x in counters)
+        {
+            int index = UnityEngine.Random.Range(0, mygrid.Count);
+            while(myset.Contains(index))
+            {
+                index = UnityEngine.Random.Range(0, mygrid.Count);
+            }
+            myset.Add(index);
+            Transform getCounter = mygrid[index];
+            Instantiate(x.prefab, getCounter.transform.position, Quaternion.identity);
+            Destroy(getCounter.gameObject); 
+        }
     }
 }

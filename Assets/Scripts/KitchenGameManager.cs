@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
+using TMPro;
 using UnityEngine;
 
 public class KitchenGameManager : MonoBehaviour
@@ -26,15 +27,23 @@ public class KitchenGameManager : MonoBehaviour
     [SerializeField] private float gamePlayingTimerMax = 20f;
     [SerializeField] private float gamePlayingTimer = 20f;
     private bool togglePause = false;
+    string gametime;
     private State state;
     private void Awake() {
         Instance = this;
         state = State.WaitingToStart;
+
     }
     // Update is called once per frame
     private void Start() {
         GameInput.Instance.OnPaused += GameInput_OnPaused;
         GameInput.Instance.OnInteract += GameInput_OnInteract;
+
+        gametime = DataBridge.Instance.timervalue;
+
+        int.TryParse(gametime, out int gettime);
+        gamePlayingTimerMax = gettime*60;
+    
     }
 
     private void GameInput_OnInteract(object sender, EventArgs e)

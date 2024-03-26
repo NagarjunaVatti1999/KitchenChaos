@@ -5,7 +5,6 @@ using UnityEngine;
 public class DeliveryCounter : BaseCounter
 {
     // Start is called before the first frame update
-    [SerializeField] DeliveryManager deliveryManager;
     public override void Interact(PlayerMovement Player)
     {
         if(Player.HasKitchenObject())
@@ -13,7 +12,7 @@ public class DeliveryCounter : BaseCounter
             if(Player.GetKithenObjects() is PlateKitchenObject)
             {
                 PlateKitchenObject plateKitchenObject = Player.GetKithenObjects() as PlateKitchenObject;
-                deliveryManager.DeliverRecipe(plateKitchenObject);
+                DeliveryManager.Instance.DeliverRecipe(plateKitchenObject);
                 Player.GetKithenObjects().DestroySelf();
             }
         }
