@@ -10,6 +10,7 @@ public class DeliveryManager : MonoBehaviour
     public static DeliveryManager Instance {get; private set;} //Creating a singleton Helps in assigning reference to Base prefabs
     // You can never add scene object referene to prefab templates which makes it difficult to drag reference everytime you add a 
     //prefab to scene so instead of adding reference everytime we create singleton which will automaticall refer to the instance
+    
     public event EventHandler OnRecipeSpawned;
     public event EventHandler OnRecipeDelivered;
 

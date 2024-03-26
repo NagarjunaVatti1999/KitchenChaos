@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3786e0e5640a01c4f875c72a14f3fe44, type: 3}
+  m_Name: cutting_counter
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 2077484313327711408, guid: 5f6f0d493aee5eb48b18612c3ca0a6a5, type: 3}
+  number: 2
